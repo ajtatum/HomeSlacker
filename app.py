@@ -26,4 +26,4 @@ def query_example():
     return '''<h1>The message value is: {}</h1>'''.format(message)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) #run app in debug mode on port 5000
+    app.run() #run app in debug mode on port 5000
