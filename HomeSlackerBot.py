@@ -16,7 +16,7 @@ SigningSecret = config['Slack']['SigningSecret']
 VerificationToken = config['Slack']['VerificationToken']
 OAUTHAccessToken = config['Slack']['OAUTHAccessToken']
 BotUserOAuthToken = config['Slack']['BotUserOAuthToken']
-ChannelID = config['Slack']['TestChannelID']
+ChannelID = config['Slack']['HomeSlackerChannel']
 
 slack_client = SlackClient(BotUserOAuthToken)
 
