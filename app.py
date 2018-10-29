@@ -9,7 +9,7 @@ with open('config.json', 'r') as f:
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
+    return "<h1>HomeSlacker</h1>"
 
 #@app.route('/messsage', methods=['GET'])
 #def message():
@@ -17,11 +17,12 @@ def home():
 @app.route('/notify')
 def query_example():
     message = request.args.get('message') #if key doesn't exist, returns None
+    channelID = request.args.get('channel', default=config['Slack']['DefaultChannel'])
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.PostMessage(hsb, message)
+    HomeSlackerBot.PostMessage(hsb, channelID, message)
 
-    return '''<h1>The message value is: {}</h1>'''.format(message)
+    return 'HomeSlacker is on it!'
 
 if __name__ == '__main__':
     app.run() #run app in debug mode on port 5000

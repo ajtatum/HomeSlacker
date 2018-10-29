@@ -16,7 +16,7 @@ SigningSecret = config['Slack']['SigningSecret']
 VerificationToken = config['Slack']['VerificationToken']
 OAUTHAccessToken = config['Slack']['OAUTHAccessToken']
 BotUserOAuthToken = config['Slack']['BotUserOAuthToken']
-ChannelID = config['Slack']['HomeSlackerChannel']
+ChannelID = config['Slack']['DefaultChannel']
 
 slack_client = SlackClient(BotUserOAuthToken)
 
@@ -30,9 +30,11 @@ slack_client = SlackClient(BotUserOAuthToken)
 #else:
 #    print("Connection Failed")
 class HomeSlackerBot:
-    def PostMessage(self, message):
+    def PostMessage(self, channelId, message):
+        logging.info("Posting message to Slack Channel {} with message {}".format(channelId, message))
+
         slack_client.api_call(
             "chat.postMessage",
-            channel=ChannelID,
+            channel=channelId,
             text=message
         )
