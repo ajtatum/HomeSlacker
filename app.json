@@ -1,0 +1,15 @@
+{
+  "name": "HomeSlacker",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
