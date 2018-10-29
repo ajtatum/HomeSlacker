@@ -1,10 +1,8 @@
 from flask import Flask, request #import main Flask class and request object
 import json
-from flask_heroku import Heroku
 from HomeSlackerBot import HomeSlackerBot
 
 app = Flask(__name__) #create the Flask app
-heroku = Heroku(app)
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -26,4 +24,4 @@ def query_example():
     return '''<h1>The message value is: {}</h1>'''.format(message)
 
 if __name__ == '__main__':
-    app.run(port=80) #run app in debug mode on port 5000
+    app.run() #run app in debug mode on port 5000
