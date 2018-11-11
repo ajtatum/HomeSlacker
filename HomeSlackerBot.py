@@ -38,3 +38,12 @@ class HomeSlackerBot:
             channel=channelId,
             text=message
         )
+
+    def ReadMessage(self, channelId, message):
+        logging.info("Reading message from Slack Channel {}".format(channelId))
+
+        slack_client.api_call(
+            "chat.readMessage",
+            channel=channelId,
+            text=message
+        )
