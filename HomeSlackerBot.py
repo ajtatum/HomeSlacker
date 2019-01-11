@@ -4,7 +4,7 @@ import time
 import json
 from slackclient import SlackClient
 
-with open('config_local.json', 'r') as f:
+with open('config.json', 'r') as f:
     config = json.load(f)
 
 logging.basicConfig()
