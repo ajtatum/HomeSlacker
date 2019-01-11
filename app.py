@@ -18,7 +18,7 @@ def home():
 @app.route('/notify')
 def notify():
     message = request.args.get('message', default="") 
-    channelID = request.args.get('channel', default=os.environ['Slack_TestChannelID'])
+    channelID = request.args.get('channel', default=os.getenv('Slack_TestChannelID'))
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
@@ -28,7 +28,7 @@ def notify():
 @app.route('/read', methods=['POST'])
 def read():
     message = request.args.get('message', default="")
-    channelID = request.args.get('channel', default=os.environ['Slack_TestChannelID'])
+    channelID = request.args.get('channel', default=os.getenv('Slack_TestChannelID'))
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
@@ -61,4 +61,4 @@ def lifxtest():
     
 
 if __name__ == '__main__':
-    app.run(debug=True) #run app in debug mode on port 5000
+    app.run(debug=os.getenv('Debug', default=True)) #run app in debug mode on port 5000
