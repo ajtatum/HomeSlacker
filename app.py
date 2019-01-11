@@ -45,7 +45,7 @@ def inbound():
     print(inbound_message)
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.ReadMessage(hsb, channel, inbound_message)
+    HomeSlackerBot.PostMessage(hsb, channel, inbound_message)
 
     return Response(), 200
     #payload = {'text': 'DigitalOcean Slack slash command is successful!'}
