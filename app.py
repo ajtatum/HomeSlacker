@@ -1,6 +1,9 @@
 from flask import Flask, request, Response #import main Flask class and request object
 import json
+import logging
 from HomeSlackerBot import HomeSlackerBot
+
+logging.basicConfig()
 
 app = Flask(__name__) #create the Flask app
 
@@ -16,7 +19,7 @@ def home():
 
 @app.route('/notify')
 def notify():
-    message = request.args.get('message') #if key doesn't exist, returns None
+    message = request.args.get('message', default="") 
     channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
 
     hsb = HomeSlackerBot()
@@ -26,30 +29,38 @@ def notify():
 
 @app.route('/read', methods=['POST'])
 def read():
-    message = request.args.get('message') #if key doesn't exist, returns None
+    message = request.args.get('message', default="")
     channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.ReadMessage(hsb, channelID, message)
+    HomeSlackerBot.PostMessage(hsb, channelID, message)
 
-    return 'HomeSlacker is on it!'
+    return Response(), 200
 
 @app.route('/slack', methods=['POST'])
-def inbound():
-    #if request.form.get('token') == SLACK_WEBHOOK_SECRET:
-    print(request.form)
+def slack():
+    logging.info(request.form)
     channel = request.form.get('channel_id')
     username = request.form.get('user_name')
     text = request.form.get('text')
-    inbound_message = username + " in " + channel + " says: " + text
-    print(inbound_message)
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.PostMessage(hsb, channel, inbound_message)
+    HomeSlackerBot.LifxStatus(hsb, channel, text)
 
     return Response(), 200
-    #payload = {'text': 'DigitalOcean Slack slash command is successful!'}
-    #return jsonify(payload)
+
+@app.route('/lifxtest', methods=['GET'])
+def lifxtest():
+    logging.info(request.args)
+    channel = request.args.get('channel_id')
+    username = request.args.get('user_name')
+    text = request.args.get('text')
+
+    hsb = HomeSlackerBot()
+    HomeSlackerBot.LifxStatus(hsb, channel, text)
+
+    return Response(), 200
+    
 
 if __name__ == '__main__':
-    app.run() #run app in debug mode on port 5000
+    app.run(debug=True) #run app in debug mode on port 5000
