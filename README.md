@@ -1,1 +1,3 @@
 "# HomeSlacker" 
+
+.\env\Scripts\activate

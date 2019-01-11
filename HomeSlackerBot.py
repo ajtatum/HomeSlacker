@@ -16,7 +16,7 @@ SigningSecret = config['Slack']['SigningSecret']
 VerificationToken = config['Slack']['VerificationToken']
 OAUTHAccessToken = config['Slack']['OAUTHAccessToken']
 BotUserOAuthToken = config['Slack']['BotUserOAuthToken']
-ChannelID = config['Slack']['DefaultChannel']
+ChannelID = config['Slack']['TestChannelID']
 
 slack_client = SlackClient(BotUserOAuthToken)
 
@@ -33,8 +33,15 @@ class HomeSlackerBot:
     def PostMessage(self, channelId, message):
         logging.info("Posting message to Slack Channel {} with message {}".format(channelId, message))
 
-        slack_client.api_call(
-            "chat.postMessage",
-            channel=channelId,
-            text=message
-        )
+        if message == "lifx":
+            slack_client.api_call(
+                "chat.postMessage",
+                channel=channelId,
+                text="You're talking to lifx (not really)"
+            )
+        else:
+            slack_client.api_call(
+                "chat.postMessage",
+                channel=channelId,
+                text=message
+            )

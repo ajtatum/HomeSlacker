@@ -15,9 +15,9 @@ def home():
 #def message():
 
 @app.route('/notify')
-def query_example():
+def querystring():
     message = request.args.get('message') #if key doesn't exist, returns None
-    channelID = request.args.get('channel', default=config['Slack']['DefaultChannel'])
+    channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
