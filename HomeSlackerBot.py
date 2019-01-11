@@ -33,15 +33,17 @@ class HomeSlackerBot:
     def PostMessage(self, channelId, message):
         logging.info("Posting message to Slack Channel {} with message {}".format(channelId, message))
 
-        if message == "lifx":
-            slack_client.api_call(
-                "chat.postMessage",
-                channel=channelId,
-                text="You're talking to lifx (not really)"
-            )
-        else:
-            slack_client.api_call(
-                "chat.postMessage",
-                channel=channelId,
-                text=message
-            )
+        slack_client.api_call(
+            "chat.postMessage",
+            channel=channelId,
+            text=message
+        )
+
+    def ReadMessage(self, channelId, message):
+        logging.info("Reading message from Slack Channel {}".format(channelId))
+
+        slack_client.api_call(
+            "chat.readMessage",
+            channel=channelId,
+            text="I can respond."
+        )

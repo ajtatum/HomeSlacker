@@ -15,12 +15,22 @@ def home():
 #def message():
 
 @app.route('/notify')
-def querystring():
+def notify():
     message = request.args.get('message') #if key doesn't exist, returns None
     channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
+
+    return 'HomeSlacker is on it!'
+
+@app.route('/read')
+def read():
+    message = request.args.get('message') #if key doesn't exist, returns None
+    channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
+
+    hsb = HomeSlackerBot()
+    HomeSlackerBot.ReadMessage(hsb, channelID, message)
 
     return 'HomeSlacker is on it!'
 
