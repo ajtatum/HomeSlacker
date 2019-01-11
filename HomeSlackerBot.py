@@ -4,19 +4,16 @@ import time
 import json
 from slackclient import SlackClient
 
-with open('config.json', 'r') as f:
-    config = json.load(f)
-
 logging.basicConfig()
 
-AppID = config['Slack']['AppID']
-ClientID = config['Slack']['ClientID']
-ClientSecret = config['Slack']['ClientSecret']
-SigningSecret = config['Slack']['SigningSecret']
-VerificationToken = config['Slack']['VerificationToken']
-OAUTHAccessToken = config['Slack']['OAUTHAccessToken']
-BotUserOAuthToken = config['Slack']['BotUserOAuthToken']
-ChannelID = config['Slack']['TestChannelID']
+AppID = os.environ['Slack_AppID']
+ClientID = os.environ['Slack_ClientID']
+ClientSecret = os.environ['Slack_ClientSecret']
+SigningSecret = os.environ['Slack_SigningSecret']
+VerificationToken = os.environ['Slack_VerificationToken']
+OAUTHAccessToken = os.environ['Slack_OAUTHAccessToken']
+BotUserOAuthToken = os.environ['Slack_BotUserOAuthToken']
+ChannelID = os.environ['Slack_TestChannelID']
 
 slack_client = SlackClient(BotUserOAuthToken)
 

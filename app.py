@@ -1,4 +1,5 @@
 from flask import Flask, request, Response #import main Flask class and request object
+import os
 import json
 import logging
 from HomeSlackerBot import HomeSlackerBot
@@ -6,9 +7,6 @@ from HomeSlackerBot import HomeSlackerBot
 logging.basicConfig()
 
 app = Flask(__name__) #create the Flask app
-
-with open('config.json', 'r') as f:
-    config = json.load(f)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -20,7 +18,7 @@ def home():
 @app.route('/notify')
 def notify():
     message = request.args.get('message', default="") 
-    channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
+    channelID = request.args.get('channel', default=os.environ['Slack_TestChannelID'])
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
@@ -30,7 +28,7 @@ def notify():
 @app.route('/read', methods=['POST'])
 def read():
     message = request.args.get('message', default="")
-    channelID = request.args.get('channel', default=config['Slack']['TestChannelID'])
+    channelID = request.args.get('channel', default=os.environ['Slack_TestChannelID'])
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.PostMessage(hsb, channelID, message)
