@@ -38,16 +38,18 @@ def read():
 def inbound():
     #if request.form.get('token') == SLACK_WEBHOOK_SECRET:
     print(request.form)
-    channel = request.form.get('channel_name')
+    channel = request.form.get('channel_id')
     username = request.form.get('user_name')
     text = request.form.get('text')
     inbound_message = username + " in " + channel + " says: " + text
     print(inbound_message)
 
-    #hsb = HomeSlackerBot()
-    #HomeSlackerBot.ReadMessage(hsb, channel, inbound_message)
+    hsb = HomeSlackerBot()
+    HomeSlackerBot.ReadMessage(hsb, channel, inbound_message)
 
     return Response(), 200
+    #payload = {'text': 'DigitalOcean Slack slash command is successful!'}
+    #return jsonify(payload)
 
 if __name__ == '__main__':
     app.run() #run app in debug mode on port 5000
