@@ -12,3 +12,6 @@ class SlackRequest(object):
         self.UserName = userName
         self.UserId = userId
         self.Text = text
+
+    def __init__(self):
+        pass

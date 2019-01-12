@@ -3,6 +3,8 @@ import os, sys, json, logging
 from HomeSlackerBot import HomeSlackerBot
 from Models.SlackRequest import SlackRequest
 
+app = Flask(__name__) #create the Flask app
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s",
@@ -12,8 +14,6 @@ logging.basicConfig(
     ])
 
 logger = logging.getLogger()
-
-app = Flask(__name__) #create the Flask app
 
 @app.route('/', methods=['GET'])
 def home():
@@ -46,7 +46,12 @@ def read():
 def slack():
     logger.info(jsonify(request.form.to_dict()))
 
-    sr = SlackRequest(request.form.get('channel_name'),request.form.get('channel_id'),request.form.get('user_name'),request.form.get('user_id'),request.form.get('text'))
+    sr = SlackRequest()
+    sr.ChannelName = request.form.get('channel_name')
+    sr.ChannelId = request.form.get('channel_id')
+    sr.UserName = request.form.get('user_name')
+    sr.UserId = request.form.get('user_id')
+    sr.Text = request.form.get('text')
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.LifxStatus(hsb, sr)
@@ -57,7 +62,12 @@ def slack():
 def lifxtest():
     logger.info(jsonify(request.args.to_dict()))
 
-    sr = SlackRequest(request.args.get('channel_name'),request.args.get('channel_id'),request.args.get('user_name'),request.args.get('user_id'),request.args.get('text'))
+    sr = SlackRequest()
+    sr.ChannelName = request.args.get('channel_name')
+    sr.ChannelId = request.args.get('channel_id')
+    sr.UserName = request.args.get('user_name')
+    sr.UserId = request.args.get('user_id')
+    sr.Text = request.args.get('text')
 
     hsb = HomeSlackerBot()
     HomeSlackerBot.LifxStatus(hsb, sr)
