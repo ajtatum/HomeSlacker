@@ -3,7 +3,7 @@ import os
 import json
 import logging
 from HomeSlackerBot import HomeSlackerBot
-from SlackRequest import SlackRequest
+from Models.SlackRequest import SlackRequest
 
 logging.basicConfig()
 

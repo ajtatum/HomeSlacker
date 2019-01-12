@@ -4,7 +4,7 @@ import time
 import json
 from pifx import PIFX
 from slackclient import SlackClient
-import SlackRequest
+from Models.SlackRequest import SlackRequest
 
 logging.basicConfig()
 
