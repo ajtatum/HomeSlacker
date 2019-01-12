@@ -43,7 +43,7 @@ def slack():
     text = request.form.get('text')
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.LifxStatus(hsb, channel, text)
+    HomeSlackerBot.LifxStatus(hsb, username, channel, text)
 
     return Response(), 200
 
@@ -55,7 +55,7 @@ def lifxtest():
     text = request.args.get('text')
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.LifxStatus(hsb, channel, text)
+    HomeSlackerBot.LifxStatus(hsb, username, channel, text)
 
     return Response(), 200
     
