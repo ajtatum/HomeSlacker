@@ -1,12 +1,17 @@
-import os
-import logging
-import time
-import json
+import os, sys, logging, time, json
 from pifx import PIFX
 from slackclient import SlackClient
 from Models.SlackRequest import SlackRequest
 
-logging.basicConfig()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s",
+    handlers=[
+        logging.FileHandler("HomeSlackerBot.log"),
+        logging.StreamHandler(sys.stdout)
+    ])
+
+logger = logging.getLogger()
 
 AppID = os.getenv('Slack_AppID')
 ClientID = os.getenv('Slack_ClientID')
@@ -22,7 +27,7 @@ slack_client = SlackClient(BotUserOAuthToken)
 
 class HomeSlackerBot:
     def PostMessage(self, channelId, message):
-        logging.info("Posting message to Slack Channel {} with message {}".format(channelId, message))
+        logger.info("Posting message to Slack Channel {} with message {}".format(channelId, message))
 
         slack_client.api_call(
             "chat.postMessage",
@@ -31,7 +36,7 @@ class HomeSlackerBot:
         )
 
     def ReadMessage(self, channelId, message):
-        logging.info("Reading message from Slack Channel {}. Message {}".format(channelId, message))
+        logger.info("Reading message from Slack Channel {}. Message {}".format(channelId, message))
 
         slack_client.api_call(
             "chat.readMessage",
@@ -40,7 +45,7 @@ class HomeSlackerBot:
         )
 
     def LifxStatus(self, SlackRequest):
-        logging.info("Reading message from Slack Channel {}. Message {}".format(SlackRequest.ChannelId, SlackRequest.Text))
+        logger.info("Reading message from Slack Channel {}. Message {}".format(SlackRequest.ChannelId, SlackRequest.Text))
 
         messageArray = SlackRequest.Text.split()
         

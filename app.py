@@ -1,11 +1,17 @@
 from flask import Flask, request, Response, jsonify #import main Flask class and request object
-import os
-import json
-import logging
+import os, sys, json, logging
 from HomeSlackerBot import HomeSlackerBot
 from Models.SlackRequest import SlackRequest
 
-logging.basicConfig()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s",
+    handlers=[
+        logging.FileHandler("HomeSlackerApp.log"),
+        logging.StreamHandler(sys.stdout)
+    ])
+
+logger = logging.getLogger()
 
 app = Flask(__name__) #create the Flask app
 
@@ -38,7 +44,7 @@ def read():
 
 @app.route('/slack', methods=['POST'])
 def slack():
-    logging.info(jsonify(request.form.to_dict()))
+    logger.info(jsonify(request.form.to_dict()))
 
     sr = SlackRequest(request.form.get('channel_name'),request.form.get('channel_id'),request.form.get('user_name'),request.form.get('user_id'),request.form.get('text'))
 
@@ -49,7 +55,7 @@ def slack():
 
 @app.route('/lifxtest', methods=['GET'])
 def lifxtest():
-    logging.info(jsonify(request.args.to_dict()))
+    logger.info(jsonify(request.args.to_dict()))
 
     sr = SlackRequest(request.args.get('channel_name'),request.args.get('channel_id'),request.args.get('user_name'),request.args.get('user_id'),request.args.get('text'))
 
