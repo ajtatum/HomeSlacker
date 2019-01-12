@@ -4,6 +4,7 @@ import time
 import json
 from pifx import PIFX
 from slackclient import SlackClient
+import SlackRequest
 
 logging.basicConfig()
 
@@ -38,10 +39,10 @@ class HomeSlackerBot:
             text="I can respond."
         )
 
-    def LifxStatus(self, username, channelId, message):
-        logging.info("Reading message from Slack Channel {}. Message {}".format(channelId, message))
+    def LifxStatus(self, SlackRequest):
+        logging.info("Reading message from Slack Channel {}. Message {}".format(SlackRequest.ChannelId, SlackRequest.Text))
 
-        messageArray = message.split()
+        messageArray = SlackRequest.Text.split()
         
         lifxRoom = messageArray[0]
         lifxLight = messageArray[1]
@@ -49,10 +50,10 @@ class HomeSlackerBot:
 
         LifxAccess.set_state(selector="group:{},label:{}".format(lifxRoom, lifxLight), power="{}".format(lifxState))
         
-        lifxResponse = "{} set: Room {}. Light {}. Status {}.".format(username, lifxRoom, lifxLight, lifxState)
+        lifxResponse = "{} set: Room {}. Light {}. Status {}.".format(SlackRequest.UserName, lifxRoom, lifxLight, lifxState)
 
         slack_client.api_call(
             "chat.postMessage",
-            channel=channelId,
+            channel=SlackRequest.ChannelId,
             text=lifxResponse
         )

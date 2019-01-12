@@ -1,8 +1,9 @@
-from flask import Flask, request, Response #import main Flask class and request object
+from flask import Flask, request, Response, jsonify #import main Flask class and request object
 import os
 import json
 import logging
 from HomeSlackerBot import HomeSlackerBot
+from SlackRequest import SlackRequest
 
 logging.basicConfig()
 
@@ -37,25 +38,23 @@ def read():
 
 @app.route('/slack', methods=['POST'])
 def slack():
-    logging.info(request.form)
-    channel = request.form.get('channel_id')
-    username = request.form.get('user_name')
-    text = request.form.get('text')
+    logging.info(jsonify(request.form.to_dict()))
+
+    sr = SlackRequest(request.form.get('channel_name'),request.form.get('channel_id'),request.form.get('user_name'),request.form.get('user_id'),request.form.get('text'))
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.LifxStatus(hsb, username, channel, text)
+    HomeSlackerBot.LifxStatus(hsb, sr)
 
     return Response(), 200
 
 @app.route('/lifxtest', methods=['GET'])
 def lifxtest():
-    logging.info(request.args)
-    channel = request.args.get('channel_id')
-    username = request.args.get('user_name')
-    text = request.args.get('text')
+    logging.info(jsonify(request.args.to_dict()))
+
+    sr = SlackRequest(request.args.get('channel_name'),request.args.get('channel_id'),request.args.get('user_name'),request.args.get('user_id'),request.args.get('text'))
 
     hsb = HomeSlackerBot()
-    HomeSlackerBot.LifxStatus(hsb, username, channel, text)
+    HomeSlackerBot.LifxStatus(hsb, sr)
 
     return Response(), 200
     
