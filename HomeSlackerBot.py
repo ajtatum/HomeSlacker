@@ -56,15 +56,17 @@ class HomeSlackerBot:
 
         logger.info(messageArray)
 
+        lifxResponse = ""
+
         try:
             lifxColor = messageArray[3]
             LifxAccess.set_state(selector="group:{},label:{}".format(lifxRoom, lifxLight), power="{}".format(lifxState), color="{}".format(lifxColor))
+            lifxResponse = "{} set: Room {}. Light {}. Status {}. Color {}.".format(SlackRequest.UserName, lifxRoom, lifxLight, lifxState, lifxColor)
         except:
             logger.info("No color specified")
         finally:
             LifxAccess.set_state(selector="group:{},label:{}".format(lifxRoom, lifxLight), power="{}".format(lifxState))
-
-        lifxResponse = "{} set: Room {}. Light {}. Status {}.".format(SlackRequest.UserName, lifxRoom, lifxLight, lifxState)
+            lifxResponse = "{} set: Room {}. Light {}. Status {}.".format(SlackRequest.UserName, lifxRoom, lifxLight, lifxState)
 
         slack_client.api_call(
             "chat.postMessage",
