@@ -4,7 +4,7 @@ An app that currently runs on Heroku to listen to and command Internet of Things
 
 ## Requirements
 
-* python-3.7.0
+* python-3.7.1
 * See [requirements.txt](requirements.txt)
 
 ## **Common Commands**
